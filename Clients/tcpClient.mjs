@@ -12,7 +12,7 @@ const sendRequest = function (method, path, callback, body = null) {
     const socket = createConnection(this.port, this.host);
 
     socket.on('connect', () => {
-        const request_lines = [`${method} ${path} HTTP/1.1`, `Host: ${this.host}`];
+        const request_lines = [`${method} ${path} HTTP/1.1`, `Host: ${this.host}`, 'Connection: close'];
 
         for (let header in this.headers) {
             request_lines.push(`${header} : ${this.headers[header]}`);
@@ -27,8 +27,11 @@ const sendRequest = function (method, path, callback, body = null) {
         socket.write(request);
     });
 
-    socket.on('data', (chuck) => {
-        response += chuck;
+    socket.on('data', (chunk) => {
+        response += chunk;
+    });
+
+    socket.on('end', () => {
         const [headers, body] = response.split('\r\n\r\n');
         const statusCode = headers.split(' ')[1];
         callback(null, {
@@ -60,9 +63,20 @@ const client = CreateHttpClient(80, 'jsonplaceholder.typicode.com');
 // Get all todos
 //----------------
 
+// client.sendRequest('GET', '/todos/', (err, resp) => {
+//     if (err) {
+//         console.log(err);
+//         return;
+//     }
+//     console.log(resp.body);
+// });
+
+// Create a post
+//---------------
+
 client.sendRequest(
-    'GET',
-    '/todos/',
+    'POST',
+    '/posts/',
     (err, resp) => {
         if (err) {
             console.log(err);
@@ -70,28 +84,12 @@ client.sendRequest(
         }
         console.log(resp.body);
     },
-    null
+    JSON.stringify({
+        title: 'foo5',
+        body: 'bar5',
+        userId: 1,
+    })
 );
-
-// Create a post
-//---------------
-
-// client.sendRequest(
-//     'POST',
-//     '/posts/',
-//     (err, resp) => {
-//         if (err) {
-//             console.log(err);
-//             return;
-//         }
-//         console.log(resp.body);
-//     },
-//     JSON.stringify({
-//         title: 'foo5',
-//         body: 'bar5',
-//         userId: 1,
-//     })
-// );
 
 // Updating the todo with id 1
 //----------------------------
