@@ -6,19 +6,18 @@
 
 import axios from 'axios';
 
-const URLTodos = 'https://jsonplaceholder.typicode.com/todos/';
-const URLPosts = 'https://jsonplaceholder.typicode.com/posts/';
+const URLTodos = 'http://localhost:5000/posts';
 const headers = {
     'Content-Type': 'application/json;charset=utf-8',
 };
 
-const doRequest = async (method, url, body) => {
+const doRequest = async (method, url, data) => {
     try {
         const response = await axios({
             method,
             url,
             headers,
-            body,
+            data,
         });
         console.log(response.data);
     } catch (error) {
@@ -32,24 +31,20 @@ doRequest('GET', URLTodos);
 
 // Get  the todo with id 1
 //---------------------------
-// doRequest('GET', `${URLTodos}/1`);
+// doRequest('GET', `${URLTodos}/277`);
 
 // Create a new Todo
 //-------------------
-// doRequest('POST', URLPosts, {
-//     title: 'foo5',
-//     body: 'bar5',
-//     userId: 1,
+// doRequest('POST', URLTodos, {
+//     todo: 'fils de ouf',
 // });
 
 // Updating the todo with id 1
 //----------------------------
-// doRequest('PUT', `${URLPosts}/1`, {
-//     title: 'Joe',
-//     body: 'est un ouf',
-//     userId: 1,
+// doRequest('PUT', `${URLTodos}/277`, {
+//     todo: 'fils de ouf updated',
 // });
 
 // Deleting the todo with id 1
 //----------------------------
-// doRequest('DELETE', `${URLPosts}/1`);
+// doRequest('DELETE', `${URLTodos}/266`);
