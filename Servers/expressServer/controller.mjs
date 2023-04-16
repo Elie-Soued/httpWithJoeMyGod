@@ -1,4 +1,4 @@
-import pool from './dbconfig.mjs';
+import pool from '../dbconfig.mjs';
 
 const getPosts = async (_, res) => {
     try {

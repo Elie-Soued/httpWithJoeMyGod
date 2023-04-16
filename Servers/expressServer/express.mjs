@@ -1,10 +1,10 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import router from './route.mjs';
+import dotenv from 'dotenv';
 
 dotenv.config();
+
 const { PORT } = process.env;
-console.log(PORT);
 
 const app = express();
 app.use(express.urlencoded({ extended: false }));
