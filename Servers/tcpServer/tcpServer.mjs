@@ -6,10 +6,18 @@ const server = net.createServer((socket) => {
 
         const method = request.split(' ')[0];
         const url = request.split(' ')[1];
+        const body = request.split('\r\n\r\n')[1];
 
-        if (method == 'GET' && url == '/') {
-            socket.write('HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nHello World\n');
-            socket.end();
+        if (url === '/') {
+            if (method === 'GET') {
+                socket.write('HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nHello World\n');
+                socket.end();
+            }
+
+            if (method === 'POST') {
+                socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n${body}\n`);
+                socket.end();
+            }
         } else {
             socket.write('HTTP/1.1 401 OK\r\nContent-Type: text/plain\r\n\r\nYou are an asshole\n');
             socket.end();

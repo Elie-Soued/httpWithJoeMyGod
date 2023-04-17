@@ -14,6 +14,14 @@ app.get('/', (_, res) => {
     });
 });
 
+app.post('/', (req, res) => {
+    res.json({
+        code: 200,
+        message: 'success',
+        data: req.body,
+    });
+});
+
 app.use((_, res) => {
     res.json({
         code: 401,
