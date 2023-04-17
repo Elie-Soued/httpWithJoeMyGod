@@ -10,8 +10,19 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use('/posts', router);
+app.get('/', (_, res) => {
+    res.json({
+        code: 200,
+        message: 'success',
+        data: 'Hello World!',
+    });
+});
 
-app.get('/', (_, res) => res.send('We are running an express server'));
-
+app.use((_, res) => {
+    res.json({
+        code: 401,
+        message: 'unauthorized',
+        data: 'Beddeh nikak ya zaber!',
+    });
+});
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
