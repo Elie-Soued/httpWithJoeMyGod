@@ -1,10 +1,6 @@
 import http from 'http';
 
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-const { PORT } = process.env;
+const PORT = 5050;
 const hostname = 'localhost';
 const server = http.createServer((req, res) => {
     if (req.url === '/' && req.method === 'GET') {
