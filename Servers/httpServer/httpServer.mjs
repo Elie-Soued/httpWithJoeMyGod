@@ -15,11 +15,11 @@ const server = http.createServer((req, res) => {
                 body += chunk;
             });
             req.on('end', () => {
-                console.log(body);
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'text/plain');
+                const todo = JSON.parse(body).todo;
+                res.end(todo.toUpperCase());
             });
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'text/plain');
-            res.end();
         }
     } else {
         res.statusCode = 401;

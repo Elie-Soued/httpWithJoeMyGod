@@ -15,7 +15,9 @@ const server = net.createServer((socket) => {
             }
 
             if (method === 'POST') {
-                socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n${body}\n`);
+                socket.write(
+                    `HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n${JSON.parse(body).todo.toUpperCase()}\n`
+                );
                 socket.end();
             }
         } else {

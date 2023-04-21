@@ -18,7 +18,7 @@ app.post('/', (req, res) => {
     res.json({
         code: 200,
         message: 'success',
-        data: req.body,
+        data: req.body.todo.toUpperCase(),
     });
 });
 
